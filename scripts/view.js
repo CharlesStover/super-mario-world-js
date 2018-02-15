@@ -53,6 +53,34 @@ window.view = function() {
 		obj.view();
 	}
 
+	// Collision detection.
+	if (!this.objects[x].static) {
+		for (var y = x + 1; y < this.objects.length; ++y) {
+			if (
+				!this.objects[y] ||
+				this.objects[y].static
+			) {
+				continue;
+			}
+			if (
+				this.objects[x].collisionX &&
+				this.objects[x].x + this.objects[x].width > this.objects[y].x &&
+				this.objects[x].x < this.objects[y].x + this.objects[y].width
+			) {
+				alert('x');
+				this.objects[x].collisionX(this.objects[y]);
+			}
+			if (
+				this.objects[x].collisionY &&
+				this.objects[x].y < this.objects[y].y + this.objects[y].height &&
+				this.objects[x].y + this.objects[x].height > this.objects[y].y
+			) {
+				alert('y');
+				this.objects[x].collisionY(this.objects[y]);
+			}
+		}
+	}
+
 	// 60 FPS
 	setTimeout(
 		window.view,

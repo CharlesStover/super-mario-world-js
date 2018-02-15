@@ -5,6 +5,9 @@ var Sprite = function(sheet, attr) {
 	if (sheet) {
 		this.set('sheet', sheet);
 	}
+	this.className = null;
+	this.collisionX = null;
+	this.collisionY = null;
 	this.controller = null;
 	this.height = 0;
 	this.horizontalAcceleration = 0;
@@ -12,12 +15,13 @@ var Sprite = function(sheet, attr) {
 	this.maxHorizontalVelocity = 0;
 	this.maxVerticalVelocity = 0;
 	this.sprite = [0, 0];
+	this.static = false;
 	this.verticalAcceleration = -0.5;
 	this.verticalVelocity = 0;
 	this.width = 0;
 	this.x = 0;
 	this.y = 0;
-	for (var key in attr) {
+	for (var key of Object.kets(attr)) {
 		this.set(key, attr[key]);
 	}
 };
@@ -32,11 +36,11 @@ Sprite.prototype.view = function() {
 	// Changes that require view.
 	while (this.changes.length) {
 		switch (this.changes.pop()) {
-			case 'element':
-				document.body.appendChild(this.element);
-				break;
 			case 'className':
 				this.element.className = this.className;
+				break;
+			case 'element':
+				document.body.appendChild(this.element);
 				break;
 			case 'height':
 				this.element.style.setProperty('height', this.height + 'px');

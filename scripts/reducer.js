@@ -5,7 +5,7 @@ window.reducer = function(type, action) {
 			this.objects.push(new Sprite(null, {
 				className: 'tube',
 				height: document.body.clientHeight - action.y,
-				x: mario.x + action.x - document.body.clientWidth / 2,
+				x: mario.x + action.x - (document.body.clientWidth - mario.x) / 2,
 				y: 0,
 				width: 32
 			}));
