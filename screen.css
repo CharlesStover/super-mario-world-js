@@ -1,0 +1,52 @@
+@keyframes fireball {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+body {
+	background-color: #000000;
+	background-image: url('images/background.png');
+	background-position: 0 center;
+	background-repeat: repeat-x;
+	box-sizing: border-box;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+
+.fireball {
+	animation-delay: 0s;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-name: fireball;
+	animation-timing-function: linear;
+	background-image: url('images/fireball.gif');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+h1 {
+	align-items: center;
+	display: flex;
+	font-family: sans-serif;
+	justify-content: center;
+	height: 100%;
+	margin: 0;
+}
+
+html {
+	height: 100%;
+}
+
+.tube {
+	background-image:
+		url('images/tube.gif'),
+		url('images/tube.gif');
+	background-position: 0 top, -32px top;
+	background-repeat: no-repeat, repeat-y;
+}
