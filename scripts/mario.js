@@ -1,4 +1,26 @@
 var mario = new Sprite('images/mario.gif', {
+	collisionX: function(obj) {
+		if (obj.type === 'tube') {
+			this.set('horizontalVelocity', 0);			
+
+			// Collision while running right.
+			if (this.direction) {
+				this.set('x', obj.x - this.width - 0.1);
+			}
+
+			// Collision while running left.
+			else {
+				this.set('x', obj.x + obj.width + 0.1);
+			}
+		}
+	},
+	collisionY: function(obj) {
+		if (obj.type === 'tube') {
+			this.set('falling', false);
+			this.set('verticalVelocity', 0);
+			this.set('y', obj.y + obj.height + 0.1);
+		}
+	},
 	controller: function() {
 		var xPerFrame = 7;
 		if (this.walking) {
@@ -8,57 +30,58 @@ var mario = new Sprite('images/mario.gif', {
 			this.walkFrame = 0;
 		}
 
-		// Set background.
-		document.body.style.setProperty('background-position', (Math.round(window.model.renders / 10) % 4) * -512 + (-1 * this.x) / 2 + 'px center');
-		document.body.style.setProperty('margin-left', (-1 * this.x) + 'px');
-
 		// Set sprite.
 		if (this.direction) {
+			var adjustWidth = function(width) {
+				var previousWidth = this.width;
+				this.set('width', width);
+				this.set('x', this.x + previousWidth - width);
+			}.bind(this);
 			if (this.walking) {
 				if (this.walkFrame < xPerFrame) {
 					if (this.horizontalVelocity === this.maxHorizontalVelocity) {
 						this.set('sprite', [95, 0]);
-						this.set('width', 18);
+						adjustWidth(18);
 					}
 					else {
 						this.set('sprite', [0, 0]);
-						this.set('width', 15);
+						adjustWidth(15);
 					}
 				}
 				else if (this.walkFrame < xPerFrame * 2) {
 					if (this.horizontalVelocity === this.maxHorizontalVelocity) {
 						this.set('sprite', [113, 0]);
-						this.set('width', 18);
+						adjustWidth(18);
 					}
 					else {
 						this.set('sprite', [15, 0]);
-						this.set('width', 15);
+						adjustWidth(15);
 					}
 				}
 				else if (this.walkFrame < xPerFrame * 3) {
 					if (this.horizontalVelocity === this.maxHorizontalVelocity) {
 						this.set('sprite', [95, 0]);
-						this.set('width', 18);
+						adjustWidth(18);
 					}
 					else {
 						this.set('sprite', [0, 0]);
-						this.set('width', 15);
+						adjustWidth(15);
 					}
 				}
 				else {
 					if (this.horizontalVelocity === this.maxHorizontalVelocity) {
 						this.set('sprite', [131, 0]);
-						this.set('width', 18);
+						adjustWidth(18);
 					}
 					else {
 						this.set('sprite', [30, 0]);
-						this.set('width', 16);
+						adjustWidth(16);
 					}
 				}
 			}
 			else {
 				this.set('sprite', [0, 0]);
-				this.set('width', 15);
+				adjustWidth(15);
 			}
 		}
 		else {
@@ -109,10 +132,15 @@ var mario = new Sprite('images/mario.gif', {
 				this.set('width', 15);
 			}
 		}
+
+		// Set background.
+		document.body.style.setProperty('background-position', (Math.round(window.model.renders / 10) % 4) * -512 + (-1 * this.x) / 2 + 'px center');
+		document.body.style.setProperty('margin-left', (-1 * this.x) + 'px');
 	},
 	direction: true,
 	falling: false,
 	jumpVelocity: 10,
+	type: 'mario',
 	maxHorizontalVelocity: 6,
 	maxVerticalVelocity: 10,
 	walkAcceleration: 0.1,

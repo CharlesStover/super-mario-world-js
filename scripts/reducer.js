@@ -5,6 +5,9 @@ window.reducer = function(type, action) {
 			this.objects.push(new Sprite(null, {
 				className: 'tube',
 				height: document.body.clientHeight - action.y,
+				sheet: ['images/tube.gif', 'images/tube.gif'],
+				sprite: [[0, 0], [32, 0]],
+				type: 'tube',
 				x: mario.x + action.x - (document.body.clientWidth - mario.x) / 2,
 				y: 0,
 				width: 32
@@ -60,6 +63,7 @@ window.reducer = function(type, action) {
 			if (mario.walking !== -1) {
 				mario.set('direction', false);
 				mario.set('horizontalAcceleration', -1 * mario.walkAcceleration);
+				mario.set('horizontalVelocity', -1 * mario.horizontalVelocity);
 				mario.set('walking', -1);
 			}
 			break;
@@ -68,6 +72,7 @@ window.reducer = function(type, action) {
 			if (mario.walking !== 1) {
 				mario.set('direction', true);
 				mario.set('horizontalAcceleration', mario.walkAcceleration);
+				mario.set('horizontalVelocity', -1 * mario.horizontalVelocity);
 				mario.set('walking', 1);
 			}
 			break;

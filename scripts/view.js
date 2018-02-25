@@ -4,81 +4,92 @@ window.view = function() {
 
 	// Render each object.
 	for (var x = 0; x < this.objects.length; ++x) {
-		if (!this.objects[x]) {
+		var thisObject = this.objects[x];
+		if (!thisObject) {
 			continue;
 		}
-		var obj = this.objects[x];
-		if (obj.horizontalAcceleration) {
-			obj.set(
+
+		// Calculate speeds
+		if (thisObject.horizontalAcceleration) {
+			thisObject.set(
 				'horizontalVelocity',
 				Math.min(
 					Math.max(
-						obj.horizontalVelocity + obj.horizontalAcceleration,
-						-1 * obj.maxHorizontalVelocity
+						thisObject.horizontalVelocity + thisObject.horizontalAcceleration,
+						-1 * thisObject.maxHorizontalVelocity
 					),
-					obj.maxHorizontalVelocity
+					thisObject.maxHorizontalVelocity
 				)
 			);
 		}
-		if (obj.verticalAcceleration) {
-			obj.set(
+		if (thisObject.verticalAcceleration) {
+			thisObject.set(
 				'verticalVelocity',
 				Math.min(
 					Math.max(
-						obj.verticalVelocity + obj.verticalAcceleration,
-						-1 * obj.maxVerticalVelocity
+						thisObject.verticalVelocity + thisObject.verticalAcceleration,
+						-1 * thisObject.maxVerticalVelocity
 					),
-					obj.maxVerticalVelocity
+					thisObject.maxVerticalVelocity
 				)
 			);
 		}
-		if (obj.horizontalVelocity) {
-			obj.set('x', obj.x + obj.horizontalVelocity);
-		}
-		if (obj.verticalVelocity) {
-			var newY = obj.y + obj.verticalVelocity;
+
+		// Calculate Y coordinate.
+		if (thisObject.verticalVelocity) {
+			var newY = thisObject.y + thisObject.verticalVelocity;
 			if (newY <= 0) {
-				obj.set('falling', false);
-				obj.set('verticalVelocity', 0);
-				obj.set('y', 0);
+				thisObject.set('falling', false);
+				thisObject.set('verticalVelocity', 0);
+				thisObject.set('y', 0);
 			}
 			else {
-				obj.set('falling', true);
-				obj.set('y', newY);
-			}
-		}
-		if (obj.controller) {
-			obj.controller();
-		}
-		obj.view();
-	}
+				thisObject.set('falling', true);
+				thisObject.set('y', newY);
 
-	// Collision detection.
-	if (!this.objects[x].static) {
-		for (var y = x + 1; y < this.objects.length; ++y) {
-			if (
-				!this.objects[y] ||
-				this.objects[y].static
-			) {
-				continue;
-			}
-			if (
-				this.objects[x].collisionX &&
-				this.objects[x].x + this.objects[x].width > this.objects[y].x &&
-				this.objects[x].x < this.objects[y].x + this.objects[y].width
-			) {
-				alert('x');
-				this.objects[x].collisionX(this.objects[y]);
-			}
-			if (
-				this.objects[x].collisionY &&
-				this.objects[x].y < this.objects[y].y + this.objects[y].height &&
-				this.objects[x].y + this.objects[x].height > this.objects[y].y
-			) {
-				alert('y');
-				this.objects[x].collisionY(this.objects[y]);
+				// Collision detection: Y
+				if (thisObject.collisionY) {
+					for (var y = 0; y < this.objects.length; ++y) {
+						var thatObject = this.objects[y];
+						if (
+							x === y ||
+							!thatObject ||
+							thatObject.static ||
+							!thisObject.isInside(thatObject)
+						) {
+							continue;
+						}
+						thisObject.collisionY(thatObject);
+					}
+				}
 			}
 		}
+
+		// Calculate X coordinate.
+		if (thisObject.horizontalVelocity) {
+			thisObject.set('x', thisObject.x + thisObject.horizontalVelocity);
+
+			// Collision detection: X
+			if (thisObject.collisionX) {
+				for (var y = 0; y < this.objects.length; ++y) {
+					var thatObject = this.objects[y];
+					if (
+						x === y ||
+						!thatObject ||
+						thatObject.static ||
+						!thisObject.isInside(thatObject)
+					) {
+						continue;
+					}
+					thisObject.collisionX(thatObject);
+				}
+			}
+		}
+
+		if (thisObject.controller) {
+			thisObject.controller();
+		}
+		thisObject.view();
 	}
 
 	// 60 FPS

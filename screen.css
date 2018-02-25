@@ -44,9 +44,5 @@ html {
 }
 
 .tube {
-	background-image:
-		url('images/tube.gif'),
-		url('images/tube.gif');
-	background-position: 0 top, -32px top;
 	background-repeat: no-repeat, repeat-y;
 }
