@@ -33,12 +33,12 @@ var Sprite = function(sheet, attr) {
 };
 
 Sprite.prototype.isInside = function(that) {
-	return (
-		this.x + this.width >= that.x &&
-		this.x <= that.x + that.width &&
-		this.y <= that.y + that.height &&
-		this.y + this.height >= that.y
-	);
+  return (
+    this.x + this.width >= that.x &&
+    this.x <= that.x + that.width &&
+    this.y <= that.y + that.height &&
+    this.y + this.height >= that.y
+  );
 };
 
 Sprite.prototype.set = function(key, value) {
