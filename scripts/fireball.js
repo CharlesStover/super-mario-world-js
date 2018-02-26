@@ -21,11 +21,11 @@ var Fireball = function() {
 				this.set('x',
 					obj.x + (
 						this.horizontalVelocity > 0
-						? -1 * this.width
-						: obj.width
+						? -1 * this.width - 0.1
+						: obj.width + 0.1
 					)
 				);
-				this.horizontalVelocity *= -1;
+				this.set('horizontalVelocity', -1 * this.horizontalVelocity);
 			}
 		},
 		collisionY: function(obj) {

@@ -63,7 +63,7 @@ window.reducer = function(type, action) {
 			if (mario.walking !== -1) {
 				mario.set('direction', false);
 				mario.set('horizontalAcceleration', -1 * mario.walkAcceleration);
-				mario.set('horizontalVelocity', -1 * mario.horizontalVelocity);
+				mario.set('horizontalVelocity', -0.25 * mario.horizontalVelocity);
 				mario.set('walking', -1);
 			}
 			break;
@@ -72,7 +72,7 @@ window.reducer = function(type, action) {
 			if (mario.walking !== 1) {
 				mario.set('direction', true);
 				mario.set('horizontalAcceleration', mario.walkAcceleration);
-				mario.set('horizontalVelocity', -1 * mario.horizontalVelocity);
+				mario.set('horizontalVelocity', -0.25 * mario.horizontalVelocity);
 				mario.set('walking', 1);
 			}
 			break;
