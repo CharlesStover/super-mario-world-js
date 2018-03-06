@@ -1,6 +1,19 @@
 var mario = new Sprite('images/mario.gif', {
   collisionX: function(obj) {
-    if (obj.type === 'tube') {
+    if (obj.type === 'galoomba') {
+      this.set('horizontalVelocity', 0);
+
+      // Collision while running right.
+      if (this.direction) {
+        this.set('x', obj.x - this.width - 0.1);
+      }
+
+      // Collision while running left.
+      else {
+        this.set('x', obj.x + obj.width + 0.1);
+      }
+    }
+    else if (obj.type === 'tube') {
       this.set('horizontalVelocity', 0);
 
       // Collision while running right.
@@ -15,7 +28,10 @@ var mario = new Sprite('images/mario.gif', {
     }
   },
   collisionY: function(obj) {
-    if (obj.type === 'tube') {
+    if (obj.type === 'galoomba') {
+      this.set('verticalVelocity', -1 * this.verticalVelocity);
+    }
+    else if (obj.type === 'tube') {
       this.set('falling', false);
       this.set('verticalVelocity', 0);
       this.set('y', obj.y + obj.height + 0.1);

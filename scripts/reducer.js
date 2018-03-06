@@ -1,6 +1,84 @@
 window.reducer = function(type, action) {
   switch (type) {
 
+    case 'ADD_GALOOMBA':
+      var speed = Math.random() * 4 - 2;
+      this.objects.push(new Sprite('images/galoomba.gif', {
+        collisionX: function(obj) {
+          if (obj.type === 'mario') {
+            if (this.horizontalVelocity < 0) {
+              obj.set('x', this.x - obj.width - 0.01);
+            }
+            else {
+              obj.set('x', this.x + this.width + 0.01);
+            }
+          }
+          else if (
+            obj.type === 'galoomba' ||
+            obj.type === 'tube'
+          ) {
+            this.set('horizontalAcceleration', -1 * this.horizontalAcceleration);
+            this.set('x',
+              obj.x + (
+                this.horizontalVelocity > 0
+                ? -1 * this.width - 0.1
+                : obj.width + 0.1
+              )
+            );
+            this.set('horizontalVelocity', -1 * this.horizontalVelocity);
+          }
+        },
+        collisionY: function(obj) {
+          if (obj.type === 'tube') {
+            this.set('verticalVelocity', 0);
+            this.set('y', obj.y + obj.height + 0.1);
+          }
+        },
+        controller: function() {
+          if (
+            this.x > mario.x + document.body.clientWidth ||
+            this.x < mario.x - document.body.clientWidth
+          ) {
+            window.reducer('DELETE', this);
+          }
+          if (this.dead) {
+            this.dead++;
+            if (this.dead > 8) {
+              window.reducer('DELETE', this);
+            }
+          }
+          else {
+            this.frame++;
+            if (this.horizontalVelocity > 0) {
+              this.set('sprite', [this.frame > 8 ? 64 : 48, 0]);
+            }
+            else {
+              this.set('sprite', [this.frame > 8 ? 16 : 0, 0]);
+            }
+            if (this.frame > 15) {
+              this.frame = 0;
+            }
+          }
+        },
+        dead: 0,
+        frame: 0,
+        height: 15,
+        horizontalAcceleration: speed < 0 ? -0.1 : 0.1,
+        horizontalVelocity: speed,
+        maxHorizontalVelocity: 2,
+        maxVerticalVelocity: -5,
+        verticalAcceleration: -1,
+        sprite:
+          speed > 0
+          ? [48, 0]
+          : [0, 0],
+        type: 'galoomba',
+        width: 16,
+        x: mario.x + Math.random() * document.body.clientWidth - document.body.clientWidth / 2,
+        y: document.body.clientHeight
+      }));
+      break;
+
 		case 'ADD_TUBE':
 			var TUBE_WIDTH = 32;
       this.objects.push(new Sprite(null, {

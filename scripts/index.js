@@ -25,12 +25,21 @@ var preload = {
 
 preload.init(
   [
-    'images/background.png',
-    'images/mario.gif'
+		'images/background.png',
+    'images/fireball.gif',
+		'images/galoomba.gif',
+    'images/mario.gif',
+    'images/tube.gif'
   ],
   function() {
-    document.body.removeChild(document.getElementsByTagName('h1').item(0));
+		document.body.removeChild(document.getElementsByTagName('h1').item(0));
     window.reducer('RESIZE_WINDOW');
-    window.view();
+		window.view();
+		setInterval(
+			function() {
+				window.reducer('ADD_GALOOMBA');
+			},
+			2500
+		);
   }
 );

@@ -17,7 +17,13 @@ var Fireball = function() {
   var fb = new Sprite('images/fireball.gif', {
     className: 'fireball',
     collisionX: function(obj) {
-      if (obj.type === 'tube') {
+      if (obj.type === 'galoomba') {
+        obj.dead = 1;
+        obj.set('horizontalAcceleration', 0);
+        obj.set('horizontalVelocity', 0);
+        obj.set('sprite', [32, 0]);
+      }
+      else if (obj.type === 'tube') {
         this.set('x',
           obj.x + (
             this.horizontalVelocity > 0
@@ -29,7 +35,13 @@ var Fireball = function() {
       }
     },
     collisionY: function(obj) {
-      if (obj.type !== 'mario') {
+      if (obj.type === 'galoomba') {
+        obj.dead = 1;
+        obj.set('horizontalAcceleration', 0);
+        obj.set('horizontalVelocity', 0);
+        obj.set('sprite', [32, 0]);
+      }
+      else if (obj.type !== 'mario') {
         if (this.verticalVelocity <= 0) {
           this.set('verticalVelocity', 7.5);
           this.set('y', obj.y + obj.height + 0.1);
