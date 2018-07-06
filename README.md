@@ -1,4 +1,4 @@
-# super-mario-world-js
+# Super Mario World Engine in JavaScript
 Super Mario World JS was a project for a college-level Programming Paradigms course.
 
 It implements a View-Model-Controller architecture with a redux-style Model that accepts actions that are fed through a reducer.
