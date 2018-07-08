@@ -12,3 +12,7 @@ _Left_ and _Right_ move Mario left and right respectively.
 _Mouse Click_ will create a tube at the click location.
 
 _Space_ makes Mario jump.
+
+## Demo
+* [GamingMedley.com](https://gamingmedley.com/super-mario-world-js/)
+* [GitHub Pages](https://gamingmedley.github.io/super-mario-world-js/)
