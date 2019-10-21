@@ -13,5 +13,11 @@ _Mouse Click_ will create a tube at the click location.
 
 _Space_ makes Mario jump.
 
+## Sponsor 💗
+
+If you are a fan of this project, you may
+[become a sponsor](https://github.com/sponsors/CharlesStover)
+via GitHub's Sponsors Program.
+
 ## Demo
 * [GitHub Pages](https://gamingmedley.github.io/super-mario-world-js/)
