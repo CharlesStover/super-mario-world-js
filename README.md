@@ -20,4 +20,4 @@ If you are a fan of this project, you may
 via GitHub's Sponsors Program.
 
 ## Demo
-* [GitHub Pages](https://gamingmedley.github.io/super-mario-world-js/)
+* [GitHub Pages](https://charlesstover.github.io/super-mario-world-js/)
